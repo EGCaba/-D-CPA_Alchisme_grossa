@@ -1,0 +1,54 @@
+---
+title: "FST plots"
+author: "Edgar Caballero"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Loading required libraries
+
+```{r}
+library(readr)
+library(ggplot2)
+
+```
+
+Loading the libraries 
+
+```{r}
+getwd()
+setwd("C:/Users/edgar/OneDrive/Documentos/R/DPCA_Alchisme_grossa/FST")
+```
+
+
+Reading the `.tsv`  files
+
+
+```{r}
+ps1 <- read_tsv("populations.fst_1-2.tsv")
+ps1
+
+```
+Adding a column with fakes bp to prevent locus to merge
+```{r}
+ps1$bpfake <- 1:nrow(ps1)
+ps1
+```
+plotting the FST vs fake-bp for the comparison bettween  population 1 and popuation 2
+
+```{r}
+attach(ps1) #Attach the names of the columns without typing the dataframe using the "$"
+names(ps1[12]) -> AMOVA_FST
+ps1
+ggplot(data= ps1) + geom_point(aes(x= bpfake, y= `AMOVA Fst`))
+
+```
+
+
+
